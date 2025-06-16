@@ -6,13 +6,13 @@
 #    By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/18 16:13:04 by aaleixo-          #+#    #+#              #
-#    Updated: 2025/06/13 12:49:33 by aaleixo-         ###   ########.fr        #
+#    Updated: 2025/06/16 15:11:32 by aaleixo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 SOURCES = \
-	philo.c utils.c
+	philo.c utils.c utils2.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
