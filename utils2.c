@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:10:58 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:51:36 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:07:59 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_helper(t_data *data, char **argv)
 		data->philos[i].sleep = ft_atoi(argv[4]) * 1000;
 		data->philos[i].die_time = ft_atoi(argv[2]);
 		data->philos[i].count_eat = 0;
+		data->philos[i].last_eat = 0;
 		data->philos[i].eat_max = data->eat_max;
 		data->philos[i].death_flag = &data->death_flag;
 		data->philos[i].death_mutex = &data->death_mutex;

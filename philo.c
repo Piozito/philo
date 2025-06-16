@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:53:01 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:51:26 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:09:59 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	parsing(char **argv)
 				return (1);
 			j++;
 		}
-		if (ft_atoi(argv[i]) < 0)
+		if (ft_atoi(argv[i]) <= 0)
 			return (1);
 		i++;
 	}
