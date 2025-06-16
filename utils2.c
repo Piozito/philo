@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:10:58 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:32:58 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:51:36 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	fork_dropper(t_philo *philo)
 
 int	death_check(t_philo *philo)
 {
-	struct timeval now;
+	struct timeval	now;
 
 	pthread_mutex_lock(philo->death_mutex);
 	gettimeofday(&now, NULL);

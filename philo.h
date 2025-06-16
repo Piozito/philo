@@ -6,24 +6,24 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:49:55 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:20:09 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:49:19 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 typedef struct s_philo
 {
 	int				n_philo;
 	pthread_t		thread;
-	long				last_eat;
+	long			last_eat;
 	int				count_eat;
 	int				eat_max;
 	int				eat;
@@ -39,16 +39,18 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int			n_philos;
-	t_philo		*philos;
-	pthread_mutex_t *forks;
-	int			eat_max;
+	int				n_philos;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	int				eat_max;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	message_mutex;
 	int				death_flag;
 }				t_data;
 
 void		*loop(void *data);
+int			ft_isdigit(int c);
+int			parsing(char **argv);
 void		one_philo(char **argv);
 long long	ft_atoi(const char *nptr);
 int			death_check(t_philo *philo);

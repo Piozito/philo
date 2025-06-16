@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:53:01 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:35:19 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:51:26 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*loop(void *arg)
 {
 	struct timeval	now;
-	t_philo	*philo;
+	t_philo			*philo;
 
 	philo = (t_philo *)arg;
 	while (philo->count_eat != philo->eat_max && *philo->death_flag == 0)
@@ -49,6 +49,34 @@ void	one_philo(char **argv)
 	return ;
 }
 
+int	parsing(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	while (argv[i])
+	{
+		while (argv[i][j])
+		{
+			if (ft_isdigit(argv[i][j]) == 0)
+				return (1);
+			j++;
+		}
+		if (ft_atoi(argv[i]) < 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_error(char *str)
+{
+	printf("%s", str);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -56,10 +84,9 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (argc < 5 || argc > 6)
-	{
-		printf("philo takes 4 to 5 arguments.\n");
-		return (1);
-	}
+		return (ft_error("philo takes 4 to 5 arguments.\n"));
+	if (parsing(argv) == 1)
+		return (ft_error("Invalid arguments.\n"));
 	if (ft_atoi(argv[1]) == 1)
 		one_philo(argv);
 	else
