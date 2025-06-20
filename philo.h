@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:49:55 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 16:49:19 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:32:06 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct s_philo
 {
 	int				n_philo;
-	pthread_t		thread;
+	pthread_t		trd;
 	long			last_eat;
 	int				count_eat;
 	int				eat_max;
@@ -48,18 +48,20 @@ typedef struct s_data
 	int				death_flag;
 }				t_data;
 
-void		*loop(void *data);
+void		*par(void *data);
 int			ft_isdigit(int c);
+void		*impar(void *data);
 int			parsing(char **argv);
 void		one_philo(char **argv);
 long long	ft_atoi(const char *nptr);
 int			death_check(t_philo *philo);
 void		fork_picker(t_philo *philo);
 void		fork_dropper(t_philo *philo);
+void		impar_helper(t_philo *philo);
 void		philo_init(t_data *data, char **argv);
 void		safe_print(t_philo *philo, char *str);
 void		init_helper(t_data *data, char **argv);
+void		custom_usleep(t_philo *philo, long usec);
 long		get_time(struct timeval start, struct timeval now);
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

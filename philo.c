@@ -6,47 +6,66 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:53:01 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 17:09:59 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:25:54 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	*loop(void *arg)
+void	*par(void *arg)
 {
 	struct timeval	now;
 	t_philo			*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->n_philo % 2 == 0)
+		usleep(1000);
 	while (philo->count_eat != philo->eat_max && *philo->death_flag == 0)
 	{
 		if (death_check(philo) == 1)
 			break ;
 		fork_picker(philo);
-		if (death_check(philo) == 1)
-			break ;
-		usleep(philo->eat);
 		safe_print(philo, "is eating");
+		custom_usleep(philo, philo->eat);
 		gettimeofday(&now, NULL);
 		philo->last_eat = get_time(philo->start, now);
 		if (death_check(philo) == 1)
 			break ;
 		fork_dropper(philo);
-		usleep(philo->sleep);
+		safe_print(philo, "is sleeping");
+		custom_usleep(philo, philo->sleep);
 		if (death_check(philo) == 1)
 			break ;
-		safe_print(philo, "is sleeping");
 		safe_print(philo, "is thinking");
 	}
 	return (NULL);
 }
 
-void	one_philo(char **argv)
+void	*impar(void *arg)
 {
-	printf("0 1 has taken a fork\n");
-	usleep(ft_atoi(argv[2]));
-	printf("%lld 1 died\n", ft_atoi(argv[2]));
-	return ;
+	t_philo			*philo;
+	struct timeval	now;
+
+	philo = (t_philo *)arg;
+	if (philo->n_philo % 2 == 1)
+		usleep(1000);
+	while ((philo->eat_max == -1 || philo->count_eat < philo->eat_max)
+		&& *philo->death_flag == 0)
+	{
+		if (death_check(philo))
+			break ;
+		impar_helper(philo);
+		custom_usleep(philo, philo->eat);
+		safe_print(philo, "is eating");
+		gettimeofday(&now, NULL);
+		philo->last_eat = get_time(philo->start, now);
+		pthread_mutex_unlock(philo->fork_right);
+		pthread_mutex_unlock(philo->fork_left);
+		custom_usleep(philo, philo->sleep);
+		safe_print(philo, "is sleeping");
+		safe_print(philo, "is thinking");
+	}
+	return (NULL);
 }
 
 int	parsing(char **argv)
@@ -58,6 +77,7 @@ int	parsing(char **argv)
 	j = 0;
 	while (argv[i])
 	{
+		j = 0;
 		while (argv[i][j])
 		{
 			if (ft_isdigit(argv[i][j]) == 0)
@@ -93,7 +113,7 @@ int	main(int argc, char **argv)
 	{
 		philo_init(&data, argv);
 		while (i < data.n_philos)
-			pthread_join(data.philos[i++].thread, NULL);
+			pthread_join(data.philos[i++].trd, NULL);
 		i = 0;
 		while (i < data.n_philos)
 			pthread_mutex_destroy(&data.forks[i++]);

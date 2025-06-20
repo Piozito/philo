@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:10:58 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/06/16 17:07:59 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:26:32 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	init_helper(t_data *data, char **argv)
 {
-	struct timeval	start;
 	int				i;
 
-	gettimeofday(&start, NULL);
 	i = 0;
 	while (i < data->n_philos)
 	{
 		data->philos[i].n_philo = i + 1;
 		data->philos[i].fork_left = &data->forks[i];
 		data->philos[i].fork_right = &data->forks[(i + 1) % data->n_philos];
-		data->philos[i].eat = ft_atoi(argv[3]) * 1000;
-		data->philos[i].sleep = ft_atoi(argv[4]) * 1000;
+		data->philos[i].eat = ft_atoi(argv[3]);
+		data->philos[i].sleep = ft_atoi(argv[4]);
 		data->philos[i].die_time = ft_atoi(argv[2]);
 		data->philos[i].count_eat = 0;
 		data->philos[i].last_eat = 0;
@@ -33,8 +31,11 @@ void	init_helper(t_data *data, char **argv)
 		data->philos[i].death_flag = &data->death_flag;
 		data->philos[i].death_mutex = &data->death_mutex;
 		data->philos[i].message_mutex = &data->message_mutex;
-		data->philos[i].start = start;
-		pthread_create(&data->philos[i].thread, NULL, loop, &data->philos[i]);
+		gettimeofday(&data->philos[i].start, NULL);
+		if (data->n_philos % 2 == 0)
+			pthread_create(&data->philos[i].trd, NULL, par, &data->philos[i]);
+		else
+			pthread_create(&data->philos[i].trd, NULL, impar, &data->philos[i]);
 		i++;
 	}
 }
